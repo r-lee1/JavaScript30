@@ -39,6 +39,38 @@ function scrub(e) {
   video.currentTime = scrubTime;
 }
 
+function makeFullscreen() {
+  if(!document.fullscreen) {
+    if(player.requestFullScreen) {
+      player.requestFullScreen();
+    }
+  } else {
+    if(document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+
+  if(!document.webkitIsFullScreen) {
+    if(player.webkitRequestFullScreen ) {
+      player.webkitRequestFullScreen();
+    }
+  } else {
+    if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+  }
+
+  if(!document.mozFullScreen) {
+    if(player.mozRequestFullScreen) {
+      player.mozRequestFullScreen();
+    }
+  } else {
+    if(document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    }
+  }
+}
+
 //toggle video play and play button
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
