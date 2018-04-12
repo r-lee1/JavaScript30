@@ -64,7 +64,7 @@
     }
 
     .plates input:checked + label:before {
-      content: '🌮';
+      content: '\1F364';
     }
 
     .add-items {
