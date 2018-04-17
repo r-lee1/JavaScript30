@@ -25,6 +25,16 @@ function paintToCanvas(){
 
   return setInterval(() => {
     ctx.drawImage(video, 0, 0, width, height);
+    //take pixels out
+    let pixels = ctx.getImageData(0, 0, width, height);
+
+    //change pixels value
+    // pixels = redEffect(pixels);
+    pixels = rgbSplit(pixels);
+    // ctx.globalAlpha = 0.3;
+
+    //put pixels back
+    ctx.putImageData(pixels, 0, 0);
   }, 16);
 }
 
@@ -40,6 +50,25 @@ function takePhoto() {
   link.innerHTML = `<img src="${data}" alt="Nice Selfie" />`;
   strip.insertBefore(link, strip.firstChild);
 }
+
+function redEffect(pixels) {
+  for(let i = 0; i < pixels.data.length; i+=4) {
+    pixels.data[i] = pixels.data[i] + 100;
+  }
+
+  return pixels;
+}
+
+function rgbSplit(pixels) {
+  for(let i = 0; i < pixels.data.length; i+=4) {
+    pixels.data[i - 150] = pixels.data[i]; //RED
+    pixels.data[i + 500] = pixels.data[i+1]; //GREEN
+    pixels.data[i - 550] = pixels.data[i+2]; //BLUE
+  }
+
+  return pixels;
+}
+
 
 getVideo();
 
