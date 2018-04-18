@@ -8,7 +8,6 @@ const snap = document.querySelector('.snap');
 function getVideo() {
   navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(localMediaStream => {
-      console.log(localMediaStream);
       video.src = window.URL.createObjectURL(localMediaStream);
       video.play();
     })
@@ -30,7 +29,8 @@ function paintToCanvas(){
 
     //change pixels value
     // pixels = redEffect(pixels);
-    pixels = rgbSplit(pixels);
+    // pixels = rgbSplit(pixels);
+    pixels = greenScreen(pixels);
     // ctx.globalAlpha = 0.3;
 
     //put pixels back
@@ -64,6 +64,31 @@ function rgbSplit(pixels) {
     pixels.data[i - 150] = pixels.data[i]; //RED
     pixels.data[i + 500] = pixels.data[i+1]; //GREEN
     pixels.data[i - 550] = pixels.data[i+2]; //BLUE
+  }
+
+  return pixels;
+}
+
+function greenScreen(pixels) {
+  const levels = {};
+
+  document.querySelectorAll('.rgb input').forEach(input => {
+    levels[input.name] = input.value;
+  });
+
+  for(let i = 0; i < pixels.data.length; i+=4) {
+    let red = pixels.data[i + 0];
+    let green = pixels.data[i + 1];
+    let blue = pixels.data[i + 2];
+
+    if(red >= levels.rmin
+      && green >= levels.gmin
+      && blue >= levels.bmin
+      && red <= levels.rmax
+      && green <= levels.gmax
+      && blue <= levels.bmax) {
+        pixels.data[i + 3] = 0;
+      }
   }
 
   return pixels;
