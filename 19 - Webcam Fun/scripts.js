@@ -108,6 +108,6 @@ function toggleFilter(e) {
   filter = e.target.innerHTML;
 }
 
-getVideo();
+// getVideo();
 
 video.addEventListener('canplay', paintToCanvas);
