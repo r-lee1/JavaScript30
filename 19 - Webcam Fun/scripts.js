@@ -3,7 +3,8 @@ const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
-
+const filterButtons = document.querySelectorAll('[name="filter"]');
+let filter = null;
 
 function getVideo() {
   navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -28,9 +29,14 @@ function paintToCanvas(){
     let pixels = ctx.getImageData(0, 0, width, height);
 
     //change pixels value
-    // pixels = redEffect(pixels);
-    // pixels = rgbSplit(pixels);
-    pixels = greenScreen(pixels);
+    if(filter === 'Red Effect') {
+      pixels = redEffect(pixels);
+    } else if (filter === 'RGB Split') {
+      pixels = rgbSplit(pixels);
+    } else if (filter === 'Green Screen') {
+      pixels = greenScreen(pixels);
+    }
+
     // ctx.globalAlpha = 0.3;
 
     //put pixels back
@@ -94,6 +100,13 @@ function greenScreen(pixels) {
   return pixels;
 }
 
+filterButtons.forEach(button => {
+  button.addEventListener('click', (e) => toggleFilter(e));
+});
+
+function toggleFilter(e) {
+  filter = e.target.innerHTML;
+}
 
 getVideo();
 
