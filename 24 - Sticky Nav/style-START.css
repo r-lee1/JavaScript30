@@ -22,8 +22,8 @@ body {
   transform: scale(0.98);
   transition: transform 0.5s;
 }
-body.fixed-nav .site-wrap {
-  transition: scale(1);
+.fixed-nav .site-wrap {
+  transform: scale(1);
 }
 
 header {
