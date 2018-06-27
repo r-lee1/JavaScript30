@@ -28,7 +28,6 @@ function displayTimeLeft(seconds) {
   const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
   timerDisplay.textContent = display;
   document.title = display;
-  console.log(minutes, remainderSeconds);
 }
 
 function displayEndTime(timestamp) {
